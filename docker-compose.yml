@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  php:
+    build: .
+    ports:
+      - '80:80'
+    volumes:
+      - './var_www:/var/www/'
+      - './vhost:/etc/apache2/sites-enabled:ro'
+    links:
+      - mysql
+
+  mysql:
+    image: mysql:5.7.10
+    environment:
+      - "MYSQL_DATABASE=fuel_db"
+      - "MYSQL_ROOT_PASSWORD=fuel_db_password"
+    ports:
+      - '3306:3306'
+    volumes:
+      - './var_lib_mysql:/var/lib/mysql'
+
+#volumes:
+#  mysql-data:
+#    driver: local
